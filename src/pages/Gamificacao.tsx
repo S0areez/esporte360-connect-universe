@@ -17,12 +17,13 @@ import {
   Flag, 
   Gift, 
   HelpCircle, 
-  Lightning, 
+  Star, 
   Medal, 
   Play, 
   Share2, 
   Trophy, 
-  Users
+  Users,
+  Clock
 } from 'lucide-react';
 
 const Gamificacao = () => {
@@ -121,7 +122,7 @@ const Gamificacao = () => {
       nome: "Velocista",
       descricao: "Superou recorde pessoal de velocidade",
       data: "20/03/2025",
-      icone: <Lightning className="h-10 w-10 text-slate-400" />,
+      icone: <Star className="h-10 w-10 text-slate-400" />,
       nivel: "prata"
     }
   ];
@@ -826,3 +827,4 @@ const Gamificacao = () => {
 };
 
 export default Gamificacao;
+
