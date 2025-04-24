@@ -1,7 +1,5 @@
-
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { cn } from "@/lib/utils";
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Home, 
   Calendar, 
@@ -16,6 +14,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useAuth } from '@/hooks/useAuth';
 
 type NavLinkProps = {
   to: string;
@@ -39,13 +38,22 @@ const NavLink = ({ to, icon, children, isActive, onClick }: NavLinkProps) => (
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   
-  // In a real app, this would come from the router
   const currentPath = window.location.pathname;
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
   const closeMenu = () => setIsMenuOpen(false);
+
+  const handleAuthClick = () => {
+    if (user) {
+      signOut();
+    } else {
+      navigate('/auth');
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
@@ -88,7 +96,9 @@ export const Navbar = () => {
           <Button variant="ghost" size="icon" onClick={toggleSearch} aria-label="Buscar">
             <Search size={20} />
           </Button>
-          <Button className="ml-2">Entrar</Button>
+          <Button className="ml-2" onClick={handleAuthClick}>
+            {user ? 'Sair' : 'Entrar'}
+          </Button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -158,7 +168,9 @@ export const Navbar = () => {
               Conta
             </NavLink>
             <div className="pt-2">
-              <Button className="w-full">Entrar</Button>
+              <Button className="w-full" onClick={handleAuthClick}>
+                {user ? 'Sair' : 'Entrar'}
+              </Button>
             </div>
           </div>
         </nav>
